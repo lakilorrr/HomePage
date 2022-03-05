@@ -1,0 +1,1 @@
+export const CHANGE_VOL = 'dic/CHANGE_VOL'

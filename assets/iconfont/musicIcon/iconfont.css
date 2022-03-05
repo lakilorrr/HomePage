@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "musicicon"; /* Project id 3198969 */
+  /* Color fonts */
+  src: 
+       url('./iconfont.woff2') format('woff2'),
+       url('./iconfont.woff') format('woff'),
+       url('./iconfont.ttf') format('truetype');
+}
+
+.musicIcon {
+  font-family: "musicIcon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bofang:before {
+  content: "\e651";
+}
+
+.icon-zanting:before {
+  content: "\e653";
+}
+

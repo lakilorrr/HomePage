@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "headericon"; /* Project id 3178938 */
+  /* Color fonts */
+  src: 
+       url('./iconfont.woff2') format('woff2'),
+       url('./iconfont.woff') format('woff'),
+       url('./iconfont.ttf') format('truetype');
+}
+
+.headerIcon {
+  font-family: "headerIcon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zhishi:before {
+  content: "\e747";
+}
+
+.icon-yinlebofangliebiao:before {
+  content: "\e6a9";
+}
+

@@ -1,0 +1,7 @@
+export const CHANGE_TALENT_BOOK = 'moyu/CHANGE_TALENT_BOOK'
+export const CHANGE_CHARACTER_LIST = 'moyu/CHANGE_CHARACTER_LIST'
+export const CHANGE_SPLASH_NAME = 'moyu/CHANGE_SPLASH_NAME'
+export const CHANGE_SPLASH_EXIT = 'moyu/CHANGE_SPLASH_EXIT'
+export const CHANGE_SHOW = 'moyu/CHANGE_SHOW'
+export const CHANGE_SPLASH = 'moyu/CHANGE_SPLASH'
+export const CHANGE_BURST = 'moyu/CHANGE_BURST'
