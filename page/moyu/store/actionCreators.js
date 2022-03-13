@@ -13,22 +13,28 @@ export const getTodayMaterialAction = () => async dispatch => {
     }
 }
 
-export const getCharacterListAction = nameArray => async dispatch => {
-    try {
+export const getBookIdx = bookIdx => dispatch =>
+    dispatch({
+        type: actionTypes.CHANGE_TALENT_BOOK_IDX,
+        bookIdx: bookIdx
+    })
+
+export const getCharacterBarAction =
+    (bookIdx = 0) =>
+    (dispatch, getState) => {
+        const talentBooks = getState().getIn(['moyu', 'talentBooks'])
         const characterList = {}
-        for (let name of nameArray) {
-            const res = await getCharacterDetail(name)
-            const character = res.data.payload.character
-            characterList[name] = character
-        }
-        dispatch({
-            type: actionTypes.CHANGE_CHARACTER_LIST,
-            characterList: characterList
-        })
-    } catch (err) {
-        console.log(err)
+        talentBooks[bookIdx] &&
+            talentBooks[bookIdx].characters.map(async (item, idx) => {
+                const res = await getCharacterDetail(item.name)
+                const character = res.data.payload.character
+                characterList[item.name] = character
+                dispatch({
+                    type: actionTypes.CHANGE_CHARACTER_LIST,
+                    characterList: { ...characterList }
+                })
+            })
     }
-}
 
 export const getSplashName = name => dispatch =>
     dispatch({
