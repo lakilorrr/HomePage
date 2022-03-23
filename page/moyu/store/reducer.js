@@ -1,10 +1,17 @@
 import { Map } from 'immutable'
 import * as actionTypes from './constants'
-
+const getSessionStorage = () => {
+    const characterList = sessionStorage.getItem('characterList')
+    if (characterList) {
+        return JSON.parse(sessionStorage.getItem('characterList'))
+    } else {
+        return {}
+    }
+}
 const initialState = Map({
     talentBooks: [],
     bookIdx: 0,
-    characterList: {},
+    characterList: getSessionStorage(),
     splashName: '',
     isShow: false,
     isSplash: null,

@@ -24,6 +24,7 @@ export default memo(function MoYu() {
     useEffect(() => {
         dispatch(getCharacterBarAction(state.bookIdx))
     }, [dispatch, state.bookIdx, talentBooks])
+    useEffect(() => sessionStorage.setItem('characterList', JSON.stringify(state.characterList)), [state.characterList])
 
     const handleBookIdx = idx => {
         dispatch(getBookIdx(idx))
