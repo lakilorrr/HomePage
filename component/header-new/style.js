@@ -12,13 +12,9 @@ export const HeaderWrapper = styled.div`
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        margin-right: -15px;
-        margin-left: -15px;
     }
 `
 export const NavBar = styled.div`
-    flex: 0 0 50%;
-    max-width: 50%;
     padding-right: 15px;
     padding-left: 15px;
     .bar-wrap {

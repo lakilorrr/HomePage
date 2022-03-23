@@ -31,45 +31,43 @@ export default memo(function HeaderNew() {
 
     return (
         <HeaderWrapper>
-            <div>
-                <div className='content'>
-                    <NavBar>
-                        <div className='bar-wrap'>
-                            <div className='bar-main'>
-                                {NavBarMenu.map((item, idx) => {
-                                    return (
-                                        <div className='bar-item' key={item.icon}>
-                                            <i className={`navbarIcon ${item.icon}`}></i>
-                                            <NavLink to={item.path} className='item-link'>
-                                                {item.title}
-                                            </NavLink>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </NavBar>
-                    <SearchBar>
-                        <div className='search-wrap'>
-                            <div className='input-wrap'>
-                                <input
-                                    type='text'
-                                    placeholder={`${searchEng ? '查词典...' : '查音乐...'}`}
-                                    className='search-input'
-                                    onChange={e => setInputContent(e.target.value)}
-                                    onKeyPress={enterSearch}
-                                />
-                                <div className='switch'>
-                                    <div className='switch-bnt'>
-                                        <i
-                                            className={`headerIcon ${searchEng ? 'icon-zhishi' : 'icon-yinlebofangliebiao'}`}
-                                            onClick={() => setSearchEng(!searchEng)}></i>
+            <div className='content'>
+                <NavBar>
+                    <div className='bar-wrap'>
+                        <div className='bar-main'>
+                            {NavBarMenu.map((item, idx) => {
+                                return (
+                                    <div className='bar-item' key={item.icon}>
+                                        <i className={`navbarIcon ${item.icon}`}></i>
+                                        <NavLink to={item.path} className='item-link'>
+                                            {item.title}
+                                        </NavLink>
                                     </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </NavBar>
+                <SearchBar>
+                    <div className='search-wrap'>
+                        <div className='input-wrap'>
+                            <input
+                                type='text'
+                                placeholder={`${searchEng ? '查词典...' : '查音乐...'}`}
+                                className='search-input'
+                                onChange={e => setInputContent(e.target.value)}
+                                onKeyPress={enterSearch}
+                            />
+                            <div className='switch'>
+                                <div className='switch-bnt'>
+                                    <i
+                                        className={`headerIcon ${searchEng ? 'icon-zhishi' : 'icon-yinlebofangliebiao'}`}
+                                        onClick={() => setSearchEng(!searchEng)}></i>
                                 </div>
                             </div>
                         </div>
-                    </SearchBar>
-                </div>
+                    </div>
+                </SearchBar>
             </div>
         </HeaderWrapper>
     )

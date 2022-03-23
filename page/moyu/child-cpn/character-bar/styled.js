@@ -69,15 +69,15 @@ export const CharacterInfo = styled.div`
         top: 20px;
         display: flex;
         justify-content: space-between;
-        .boss {
+        .material {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .boss-name {
+            .material-name {
                 line-height: 35px;
                 border: transparent;
             }
-            .boss-img {
+            .material-img {
                 width: 35px;
                 height: 35px;
             }
