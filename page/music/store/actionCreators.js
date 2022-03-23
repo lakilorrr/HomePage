@@ -2,11 +2,13 @@ import * as actionTypes from './constants'
 import { getSearchResult, getTopList } from '../../../service/music'
 export const getSearchResultAction = query => async dispatch => {
     try {
-        const res = await getSearchResult(query)
-        dispatch({
-            type: actionTypes.CHANGE_SEARCH_RESULT,
-            searchResult: res.data.result.songs
-        })
+        if (query) {
+            const res = await getSearchResult(query)
+            dispatch({
+                type: actionTypes.CHANGE_SEARCH_RESULT,
+                searchResult: res.data.result.songs
+            })
+        }
     } catch (err) {
         console.log(err)
     }

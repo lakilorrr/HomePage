@@ -23,16 +23,19 @@ export const getCharacterBarAction =
     (bookIdx = 0) =>
     (dispatch, getState) => {
         const talentBooks = getState().getIn(['moyu', 'talentBooks'])
+        const rawList = getState().getIn(['moyu', 'characterList'])
         const characterList = {}
         talentBooks[bookIdx] &&
             talentBooks[bookIdx].characters.map(async (item, idx) => {
                 const res = await getCharacterDetail(item.name)
                 const character = res.data.payload.character
                 characterList[item.name] = character
-                dispatch({
-                    type: actionTypes.CHANGE_CHARACTER_LIST,
-                    characterList: { ...characterList }
-                })
+                if (!rawList[item.name]) {
+                    dispatch({
+                        type: actionTypes.CHANGE_CHARACTER_LIST,
+                        characterList: { ...characterList }
+                    })
+                }
             })
     }
 

@@ -6,35 +6,27 @@ import { CharacterInfo } from './styled'
 const CharacterBar = memo(props => {
     const item = props.item
     const [avatarClick, setAvatarClick] = useState(false)
-    const [splashClick, setSpalshClick] = useState(false)
-    const [burstClick, setBurstClick] = useState(false)
 
     const state = useSelector(
         state => ({
             characterList: state.getIn(['moyu', 'characterList']),
             splashExit: state.getIn(['moyu', 'splashExit']),
             isShow: state.getIn(['moyu', 'isShow']),
-            isBurst: state.getIn(['moyu', 'isBurst'])
+            isBurst: state.getIn(['moyu', 'isBurst']),
+            isSplash: state.getIn(['moyu', 'isSplash'])
         }),
         shallowEqual
     )
-    const characterList = state.characterList
+    const chName = state.characterList[item.name] || []
 
-    const nameLowerCase = item.name.toLowerCase()
     const dispatch = useDispatch()
 
-    useEffect(() => !state.isBurst && state.splashExit && setBurstClick(false), [state.splashExit, state.isBurst])
-    useEffect(() => !state.isBurst && state.splashExit && setSpalshClick(false), [state.splashExit, state.isBurst])
-    useEffect(() => dispatch(getSplash(splashClick)), [dispatch, splashClick])
     useEffect(() => {
-        dispatch(getBurst(burstClick))
-    }, [dispatch, burstClick])
-    useEffect(() => {
-        if (splashClick || burstClick) {
-            dispatch(getSplashName(nameLowerCase))
+        if (state.isBurst || state.isBurst) {
+            dispatch(getSplashName(item.name))
             dispatch(getShow(true))
         }
-    }, [dispatch, splashClick, burstClick, nameLowerCase])
+    }, [dispatch, state.isBurst, state.isSplash, item])
 
     const isTraveler = name => {
         return /traveler/.test(name)
@@ -44,34 +36,45 @@ const CharacterBar = memo(props => {
     }
 
     const handleChouKa = () => {
-        setSpalshClick(true)
-        setBurstClick(false)
+        dispatch(getBurst(false))
+        dispatch(getSplash(true))
     }
     const handleBurst = () => {
-        setBurstClick(true)
-        setSpalshClick(false)
+        dispatch(getBurst(true))
+        dispatch(getSplash(false))
     }
 
     return (
         <CharacterInfo>
             <div className='character-img'>
-                <img src={item.iconURL} alt='' onClick={e => isAvatarClick()} className='icon-img' />
+                <img src={chName.iconURL} alt='' onClick={e => isAvatarClick()} className='icon-img' />
             </div>
-            <img src={characterList[item.name]?.portraitImageURL} alt='' className={`card-img ${avatarClick && 'card-show'}`} />
+            <img src={chName.portraitImageURL} alt='' className={`card-img ${avatarClick && 'card-show'}`} />
 
             <div className='character-detail'>
                 <div className='charater-name'>{item.name}</div>
-                <div className='character-dpt'>{characterList[item.name]?.description}</div>
+                <div className='character-dpt'>{chName.description}</div>
                 <div className='bottom-bar'>
-                    <div className='boss button'>
-                        <div className='boss-name'>{characterList[item.name]?.talentMaterial[0].name}</div>
-                        <img src={characterList[item.name]?.talentMaterial[0].iconUrl} alt='' className='boss-img' />
-                    </div>
-                    <div className='preview'>
-                        <div className='burst button' onClick={e => handleBurst()}>
-                            元素爆发
+                    {chName.talentMaterial && (
+                        <div className='material-bar'>
+                            <div className='material button'>
+                                <img src={chName.talentMaterial[0].iconUrl} alt='' className='material-img' />
+                                <div className='material-name'>{chName.talentMaterial[0].name}</div>
+                            </div>
+
+                            <div className='material button'>
+                                <img src={chName.localSpecialty.iconUrl} alt='' className='material-img' />
+                                <div className='material-name'>{chName.localSpecialty.name}</div>
+                            </div>
                         </div>
-                        {isTraveler(nameLowerCase) || (
+                    )}
+                    <div className='preview'>
+                        {chName.combatSkills && chName.combatSkills[2].variants[0].gifUrl && (
+                            <div className='burst button' onClick={e => handleBurst()}>
+                                元素爆发
+                            </div>
+                        )}
+                        {isTraveler(item.name) || (
                             <div className='chouka button' onClick={e => handleChouKa()}>
                                 来一发
                             </div>
