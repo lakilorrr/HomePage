@@ -34,7 +34,7 @@ const IMGPreview = memo(props => {
     const handleShow = () => {
         setIsShow(true)
     }
-
+    const chName = state.characterList[name] || []
     return (
         <PreviewWrapper cancel={isExit} show={state.isShow}>
             <div className='exit' onClick={e => handleExit()}>
@@ -43,7 +43,7 @@ const IMGPreview = memo(props => {
             <div className='wrap'>
                 {state.isBurst && (
                     <img
-                        src={`https://res.cloudinary.com/dnoibyqq2/image/upload/v1617900084/genshin-app/characters/${name}/gifs/burst.gif`}
+                        src={chName && chName.combatSkills[2].variants[0].gifUrl}
                         alt=''
                         loading='lazy'
                         className='burst'
@@ -54,7 +54,7 @@ const IMGPreview = memo(props => {
                         src={
                             name === 'hutao'
                                 ? 'https://api.genshin.dev/characters/hu-tao/gacha-splash'
-                                : `https://api.genshin.dev/characters/${name}/gacha-splash`
+                                : `https://api.genshin.dev/characters/${name.toLowerCase()}/gacha-splash`
                         }
                         alt=''
                         loading='lazy'
