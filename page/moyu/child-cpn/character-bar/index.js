@@ -21,15 +21,8 @@ const CharacterBar = memo(props => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (state.isBurst || state.isBurst) {
-            dispatch(getSplashName(item.name))
-            dispatch(getShow(true))
-        }
-    }, [dispatch, state.isBurst, state.isSplash, item])
-
     const isTraveler = name => {
-        return /traveler/.test(name)
+        return /traveler/i.test(name)
     }
     const isAvatarClick = () => {
         setAvatarClick(!avatarClick)
@@ -38,10 +31,14 @@ const CharacterBar = memo(props => {
     const handleChouKa = () => {
         dispatch(getBurst(false))
         dispatch(getSplash(true))
+        dispatch(getSplashName(item.name))
+        dispatch(getShow(true))
     }
     const handleBurst = () => {
         dispatch(getBurst(true))
         dispatch(getSplash(false))
+        dispatch(getSplashName(item.name))
+        dispatch(getShow(true))
     }
 
     return (
@@ -49,7 +46,7 @@ const CharacterBar = memo(props => {
             <div className='character-img'>
                 <img src={chName.iconURL} alt='' onClick={e => isAvatarClick()} className='icon-img' />
             </div>
-            <img src={chName.portraitImageURL} alt='' className={`card-img ${avatarClick && 'card-show'}`} />
+            <img src={avatarClick ? chName.portraitImageURL : null} alt='' className={`card-img ${avatarClick && 'card-show'}`} />
 
             <div className='character-detail'>
                 <div className='charater-name'>{item.name}</div>
