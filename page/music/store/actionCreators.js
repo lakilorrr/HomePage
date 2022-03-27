@@ -13,6 +13,20 @@ export const getSearchResultAction = query => async dispatch => {
         console.log(err)
     }
 }
+export const getSearchResultPageAction = (query, page) => async (dispatch, getState) => {
+    const searchResult = getState().getIn(['music', 'searchResult'])
+    try {
+        if (query && searchResult && page !== 1) {
+            const res = await getSearchResult(query, page)
+            dispatch({
+                type: actionTypes.CHANGE_SEARCH_RESULT,
+                searchResult: [...searchResult, ...res.data.result.songs]
+            })
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
 export const getTopListAction = () => async dispatch => {
     try {
         const res = await getTopList()

@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { getSearchResultAction, getTopListAction, changeCurrentSongIdx } from './store/actionCreators'
+import { getSearchResultAction, getTopListAction, changeCurrentSongIdx, getSearchResultPageAction } from './store/actionCreators'
 import ToplistItem from './child-cpn/toplist-item'
 import { showSingers } from '../../util/helpers'
 import { MusicWrapper } from './style'
@@ -10,6 +11,10 @@ export default memo(function Music() {
     const [isHover, setIsHover] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [hasCopyright, setHasCopyright] = useState()
+    const [resPage, setResPage] = useState(1)
+    const { ref, inView } = useInView({
+        threshold: 0.8
+    })
     const audioRef = useRef()
 
     const state = useSelector(
@@ -31,11 +36,20 @@ export default memo(function Music() {
             top: 0,
             behavior: 'smooth'
         })
+        setResPage(1)
     }, [dispatch, state.musicSearch])
     useEffect(() => {
         dispatch(changeCurrentSongIdx(currentSongIdx))
     }, [dispatch, currentSongIdx])
     useEffect(() => sessionStorage.setItem('topList', JSON.stringify(state.topList)), [state.topList])
+    useEffect(() => {
+        if (inView && state.searchResult.length === resPage * 15) {
+            setResPage(resPage + 1)
+        }
+    }, [inView, resPage, state.searchResult])
+    useEffect(() => {
+        dispatch(getSearchResultPageAction(state.musicSearch, resPage))
+    }, [dispatch, resPage])
 
     const getTime = duration => {
         const stamp = +duration
@@ -100,6 +114,7 @@ export default memo(function Music() {
                                 ) : (
                                     <div className='no-result'>糟糕，没有搜索</div>
                                 )}
+                                {state.searchResult.length > 0 && <div ref={ref}></div>}
                             </div>
                             <div className='toplist-container'>
                                 <h3 className='list-title'>网易云音乐飙升榜</h3>
@@ -128,7 +143,7 @@ export default memo(function Music() {
                                     controls
                                     autoPlay
                                     ref={audioRef}
-                                    src={`https://music.163.com/song/media/outer/url?id=${state.songId}.mp3`}
+                                    src={state.songId ? `https://music.163.com/song/media/outer/url?id=${state.songId}.mp3` : null}
                                     className={`audio-bar ${isHover ? 'show' : ''}`}
                                     onPause={() => setIsPlaying(false)}
                                     onPlay={() => setIsPlaying(true)}

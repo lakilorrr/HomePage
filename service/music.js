@@ -1,6 +1,6 @@
 import axios from 'axios'
-export const getSearchResult = query => {
-    const url = `/cloudsearch?keywords=${encodeURIComponent(query)}`
+export const getSearchResult = (query, page) => {
+    const url = `/cloudsearch?keywords=${encodeURIComponent(query)}&limit=15&offset=${(page-1)*15}`
     return new Promise((resolve, reject) => {
         axios
             .get(url)
