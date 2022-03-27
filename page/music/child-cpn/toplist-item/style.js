@@ -7,16 +7,14 @@ export const SongItemWrapper = styled.div`
     align-items: baseline;
 
     .rank {
-        width: 25px;
-        margin-right: 5px;
+        width: 15%;
     }
     .song-info {
         display: flex;
-        width: 100%;
+        width: 90%;
         justify-content: space-between;
         align-items: baseline;
         .song-name-box {
-            width: 200px;
             height: 20px;
             display: flex;
             align-items: baseline;

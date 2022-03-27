@@ -17,12 +17,9 @@ export const MusicWrapper = styled.div`
             z-index: 1;
             background-color: #fff;
         }
-        .song-table-fixed {
-            position: sticky;
-            top: 50px;
-        }
         .song-table {
-            position: absolute;
+            position: sticky;
+            top: 130px;
         }
     }
     .result-container {
