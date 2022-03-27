@@ -1,9 +1,10 @@
 import { Map } from "immutable"
 import * as actionTypes from './constants'
+import { getSessionStorage } from '../../../util/helpers'
 
 const initialState = Map({
     searchResult: [],
-    topList: [],
+    topList: getSessionStorage('topList'),
     songId: 0
 })
 

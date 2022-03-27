@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getSearchResultAction, getTopListAction, changeCurrentSongIdx } from './store/actionCreators'
 import ToplistItem from './child-cpn/toplist-item'
-import { showSingers } from '../../util/showSingers'
+import { showSingers } from '../../util/helpers'
 import { MusicWrapper } from './style'
 
 export default memo(function Music() {
@@ -35,6 +35,7 @@ export default memo(function Music() {
     useEffect(() => {
         dispatch(changeCurrentSongIdx(currentSongIdx))
     }, [dispatch, currentSongIdx])
+    useEffect(() => sessionStorage.setItem('topList', JSON.stringify(state.topList)), [state.topList])
 
     const getTime = duration => {
         const stamp = +duration
